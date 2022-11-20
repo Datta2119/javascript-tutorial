@@ -24,6 +24,8 @@ const BASE_URL = `https://www.superheroapi.com/api.php/${ACCESS_TOKEN}`
 const heroNameDiv = document.getElementById('heroName')
 const heroImageDiv = document.getElementById('heroImage')
 
+// =========== Pick up your super hero by clicking Random Hero Button ===========
+
 // "getRandomSuperHero" is a function which will pick a random number from "idArray"
 // It'll then search in the API with that id and fetch the relevant super hero data against the id
 // It has 0 argument
@@ -49,3 +51,25 @@ const getRandomSuperHero = () => {
 
 const randomHeroButton = document.getElementById('randomHeroButton')
 randomHeroButton.onclick = () => getRandomSuperHero()
+
+
+// =========== Pick up your super hero by searching ===========
+const searchInputBox = document.getElementById('searchInput')
+
+// "getSearchSuperHero" is a function which will take an input from user
+// It'll then search in the API by that name and fetch the relevant super hero data against the name
+// It has 1 argument 👉 "name"
+const getSearchSuperHero = (name) => {
+    console.log(searchInputBox.value)
+    fetch(`${BASE_URL}/search/${name}`)
+    .then(response => response.json())
+    .then(json => {
+        const hero = json.results[0]
+        console.log(hero)
+        heroNameDiv.innerHTML = `<span> ${hero.name} </span>`
+        heroImageDiv.innerHTML = `<img src="${hero.image.url}" height=300 width=250/>`
+    })
+}
+
+const searchButton = document.getElementById('searchButton')
+searchButton.onclick = () => getSearchSuperHero(searchInputBox.value)
