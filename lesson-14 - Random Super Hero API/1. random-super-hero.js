@@ -30,14 +30,18 @@ const heroImageDiv = document.getElementById('heroImage')
 // It'll then search in the API with that id and fetch the relevant super hero data against the id
 // It has 0 argument
 const getRandomSuperHero = () => {
-    let idArray = []
+    // const idArray = []
 
-    // This for loop is looping through 1 to 731 and pushing each value to the array
-    for (let id = 1; id <= 731; id++) {
-        idArray.push(id)
-    }
+    // for(let id = 1; id <= 731; id++){
+    //     idArray.push(id)
+    // }
 
-    let randomId = Math.floor(Math.random() * idArray.length)
+    // let randomId = Math.floor(Math.random() * idArray.length)
+    // console.log(randomId)
+
+    const numberOfHeros = 731
+
+    let randomId = Math.ceil(Math.random() * numberOfHeros)
     console.log(randomId)
 
     fetch(`${BASE_URL}/${randomId}`)
