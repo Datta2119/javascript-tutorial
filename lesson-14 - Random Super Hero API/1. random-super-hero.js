@@ -23,6 +23,20 @@ const BASE_URL = `https://www.superheroapi.com/api.php/${ACCESS_TOKEN}`
 
 const heroNameDiv = document.getElementById('heroName')
 const heroImageDiv = document.getElementById('heroImage')
+const heroPowerStatsDiv = document.getElementById('heroPowerStats')
+const heroPower = document.getElementById('heroPower')
+const heroIntelligence = document.getElementById('heroIntelligence')
+const heroCombat = document.getElementById('heroCombat')
+
+const img = document.getElementById('img');
+// img.innerHTML = `<img src="https://png.pngtree.com/png-clipart/20211014/ourmid/pngtree-ninja-assassin-game-logo-clothing-gray-png-image_3981078.png" />`
+
+img.addEventListener('error', function handleError() {
+  const defaultImage = 'https://png.pngtree.com/png-clipart/20211014/ourmid/pngtree-ninja-assassin-game-logo-clothing-gray-png-image_3981078.png';
+
+  img.src = defaultImage;
+  img.alt = 'default';
+});
 
 // =========== Pick up your super hero by clicking Random Hero Button ===========
 
@@ -48,13 +62,26 @@ const getRandomSuperHero = () => {
     .then(response => response.json())
     .then(json => {
         console.log(json)
-        heroNameDiv.innerHTML = `<span> ${json.name} </span>`
+        heroNameDiv.innerHTML = `<h2> Super Hero: ${json.name} </h2>`
         heroImageDiv.innerHTML = `<img src="${json.image.url}" height=300 width=250/>`
+        heroPower.innerHTML = `<p> 💪 Power: ${json.powerstats.power} </p>`
+        heroIntelligence.innerHTML = `<p> 🧠 Intelligence: ${json.powerstats.intelligence} </p>`
+        heroCombat.innerHTML = `<p> 🥷 Combat: ${json.powerstats.combat} </p>`
     })
 }
 
 const randomHeroButton = document.getElementById('randomHeroButton')
-randomHeroButton.onclick = () => getRandomSuperHero()
+randomHeroButton.onclick = () => {
+    img.style.display = "none"
+    getRandomSuperHero()
+}
+
+
+// randomHeroButton.onclick = () => {
+//     // img.style.visibility = "hidden"
+//     img.style.display = "none"
+//     getRandomSuperHero()
+// }
 
 
 // =========== Pick up your super hero by searching ===========
@@ -70,10 +97,16 @@ const getSearchSuperHero = (name) => {
     .then(json => {
         const hero = json.results[0]
         console.log(hero)
-        heroNameDiv.innerHTML = `<span> ${hero.name} </span>`
+        heroNameDiv.innerHTML = `<h2> Super Hero: ${hero.name} </h2>`
         heroImageDiv.innerHTML = `<img src="${hero.image.url}" height=300 width=250/>`
+        heroPower.innerHTML = `<p> 💪 Power: ${hero.powerstats.power} </p>`
+        heroIntelligence.innerHTML = `<p> 🧠 Intelligence: ${hero.powerstats.intelligence} </p>`
+        heroCombat.innerHTML = `<p> 🥷 Combat: ${hero.powerstats.combat} </p>`
     })
 }
 
 const searchButton = document.getElementById('searchButton')
-searchButton.onclick = () => getSearchSuperHero(searchInputBox.value)
+searchButton.onclick = () => {
+    img.style.display = "none"
+    getSearchSuperHero(searchInputBox.value)
+}
