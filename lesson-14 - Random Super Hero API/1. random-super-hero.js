@@ -28,15 +28,34 @@ const heroPower = document.getElementById('heroPower')
 const heroIntelligence = document.getElementById('heroIntelligence')
 const heroCombat = document.getElementById('heroCombat')
 
-const img = document.getElementById('img');
+// const img = document.getElementById('img');
 // img.innerHTML = `<img src="https://png.pngtree.com/png-clipart/20211014/ourmid/pngtree-ninja-assassin-game-logo-clothing-gray-png-image_3981078.png" />`
 
-img.addEventListener('error', function handleError() {
-  const defaultImage = 'https://png.pngtree.com/png-clipart/20211014/ourmid/pngtree-ninja-assassin-game-logo-clothing-gray-png-image_3981078.png';
+// img.addEventListener('error', function handleError() {
+//   const defaultImage = 'https://png.pngtree.com/png-clipart/20211014/ourmid/pngtree-ninja-assassin-game-logo-clothing-gray-png-image_3981078.png';
 
-  img.src = defaultImage;
-  img.alt = 'default';
-});
+//   img.src = defaultImage;
+//   img.alt = 'default';
+// });
+
+
+const statToEmoji = {
+    intelligence: "🧠",
+    strength: "💪",
+    speed: "⚡",
+    durability: "🏋️",
+    power: "📊",
+    combat: "⚔️",
+}
+
+const superHeroStat = (character) => {
+    const stats = Object.keys(character.powerstats).map(stat => {
+        return `<p> ${statToEmoji[stat]} ${stat.toUpperCase()}: ${character.powerstats[stat]} </p>`
+    })
+
+    console.log(stats.join(''))
+    return stats.join('')
+}
 
 // =========== Pick up your super hero by clicking Random Hero Button ===========
 
@@ -61,18 +80,19 @@ const getRandomSuperHero = () => {
     fetch(`${BASE_URL}/${randomId}`)
     .then(response => response.json())
     .then(json => {
-        console.log(json)
+        console.log(json.powerstats)
+        const stats = superHeroStat(json)
         heroNameDiv.innerHTML = `<h2> Super Hero: ${json.name} </h2>`
-        heroImageDiv.innerHTML = `<img src="${json.image.url}" height=300 width=250/>`
-        heroPower.innerHTML = `<p> 💪 Power: ${json.powerstats.power} </p>`
-        heroIntelligence.innerHTML = `<p> 🧠 Intelligence: ${json.powerstats.intelligence} </p>`
-        heroCombat.innerHTML = `<p> 🥷 Combat: ${json.powerstats.combat} </p>`
+        heroImageDiv.innerHTML = `<img src="${json.image.url}" height=300 width=250/>${stats}`
+        // heroPower.innerHTML = `<p> 💪 Power: ${json.powerstats.power} </p>`
+        // heroIntelligence.innerHTML = `<p> 🧠 Intelligence: ${json.powerstats.intelligence} </p>`
+        // heroCombat.innerHTML = `<p> 🥷 Combat: ${json.powerstats.combat} </p>`
     })
 }
 
 const randomHeroButton = document.getElementById('randomHeroButton')
 randomHeroButton.onclick = () => {
-    img.style.display = "none"
+    // img.style.display = "none"
     getRandomSuperHero()
 }
 
@@ -97,16 +117,17 @@ const getSearchSuperHero = (name) => {
     .then(json => {
         const hero = json.results[0]
         console.log(hero)
+        const stats = superHeroStat(hero)
         heroNameDiv.innerHTML = `<h2> Super Hero: ${hero.name} </h2>`
-        heroImageDiv.innerHTML = `<img src="${hero.image.url}" height=300 width=250/>`
-        heroPower.innerHTML = `<p> 💪 Power: ${hero.powerstats.power} </p>`
-        heroIntelligence.innerHTML = `<p> 🧠 Intelligence: ${hero.powerstats.intelligence} </p>`
-        heroCombat.innerHTML = `<p> 🥷 Combat: ${hero.powerstats.combat} </p>`
+        heroImageDiv.innerHTML = `<img src="${hero.image.url}" height=300 width=250/>${stats}`
+        // heroPower.innerHTML = `<p> 💪 Power: ${hero.powerstats.power} </p>`
+        // heroIntelligence.innerHTML = `<p> 🧠 Intelligence: ${hero.powerstats.intelligence} </p>`
+        // heroCombat.innerHTML = `<p> 🥷 Combat: ${hero.powerstats.combat} </p>`
     })
 }
 
 const searchButton = document.getElementById('searchButton')
 searchButton.onclick = () => {
-    img.style.display = "none"
+    // img.style.display = "none"
     getSearchSuperHero(searchInputBox.value)
 }
